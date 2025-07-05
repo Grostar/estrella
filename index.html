@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¿Quieres ser mi Estrella para siempre?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    button {
+      padding: 15px 35px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    #enterBtn {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      margin-bottom: 20px;
+    }
+    #enterBtn:hover {
+      transform: scale(1.1);
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      color: #f9f871;
+      text-shadow: 0 0 10px #fff;
+      animation: fadeIn 1.2s ease-in;
+    }
+    .button-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    #yesBtn {
+      background: linear-gradient(to right, #00f2fe, #4facfe);
+      color: #000;
+    }
+    #yesBtn:hover {
+      transform: scale(1.1);
+    }
+    #noBtn {
+      background: linear-gradient(to right, #ff6a6a, #ff4757);
+      color: white;
+      position: relative;
+    }
+    #noBtn:hover {
+      transform: scale(1.1) rotate(2deg);
+    }
+    .happy-message {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #7bed9f;
+      animation: pop 1s ease;
+      text-shadow: 0 0 10px #2ecc71;
+    }
+    video {
+      width: 90%;
+      max-width: 720px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.2);
+      margin-top: 10px;
+    }
+    .notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 12px 20px;
+      border-radius: 20px;
+      font-size: 1em;
+      color: #ffffff;
+      animation: fadeInOut 5s ease forwards;
+      z-index: 9999;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    #tryText {
+      font-size: 1.2em;
+      color: #f0a500;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 600;
+      text-shadow: 0 0 5px #f0a500aa;
+      display: none;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    }
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6em;
+      }
+      button {
+        font-size: 1em;
+        padding: 12px 25px;
+      }
+      .happy-message {
+        font-size: 1.5em;
+      }
+      .button-container {
+        flex-direction: column;
+      }
+      #tryText {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Notificación -->
+  <div class="notification">🎵 Sube el volumen para una mejor experiencia LOCAAA</div>
+
+  <!-- Música de fondo -->
+  <audio id="bgMusic" loop>
+    <source src="mil_vidas.mp3" type="audio/mpeg" />
+    Tu navegador no soporta el audio.
+  </audio>
+
+  <!-- Botón Entrar -->
+  <button id="enterBtn">Entrar</button>
+
+  <!-- Contenido oculto al inicio -->
+  <h1 id="mainTitle" style="display:none;">¿Quieres ser mi Estrella para siempre? ✨</h1>
+  <div class="button-container" id="btnContainer" style="display:none;">
+    <button id="yesBtn">Sí 💖</button>
+    <button id="noBtn">No ❌</button>
+  </div>
+  <p id="tryText">prueba a pulsar el no locaaaa</p>
+
+  <script>
+    const enterBtn = document.getElementById('enterBtn');
+    const mainTitle = document.getElementById('mainTitle');
+    const btnContainer = document.getElementById('btnContainer');
+    const tryText = document.getElementById('tryText');
+    const bgMusic = document.getElementById('bgMusic');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+
+    // Cuando clic en Entrar:
+    enterBtn.addEventListener('click', () => {
+      enterBtn.style.display = 'none';
+      mainTitle.style.display = 'block';
+      btnContainer.style.display = 'flex';
+      tryText.style.display = 'block';
+      bgMusic.play().catch(() => {});
+    });
+
+    yesBtn.addEventListener('click', () => {
+      document.body.innerHTML = `
+        <div class="happy-message">¡Sabía que dirías que sí! 💕</div>
+        <video id="video" controls autoplay>
+          <source src="video.mp4" type="video/mp4" />
+          Tu navegador no soporta el video.
+        </video>
+      `;
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
+      }
+      const video = document.getElementById('video');
+      video.addEventListener('ended', () => {
+        document.body.innerHTML = `
+          <div class="happy-message" style="color:#f9f871; font-size: 3em; text-shadow: 0 0 15px #ffd700;">
+            Te quiero mucho Estrella jeje
+          </div>
+        `;
+      });
+    });
+
+    noBtn.addEventListener('click', () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = window.innerHeight - noBtn.offsetHeight;
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    });
+  </script>
+</body>
+</html>
